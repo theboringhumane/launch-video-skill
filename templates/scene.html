@@ -1,0 +1,28 @@
+<template>
+  <style>
+    /* fonts: every scene declares the faces it uses, from assets/fonts/ */
+    @font-face { font-family: "Display"; src: url("assets/fonts/display.woff2") format("woff2"); }
+    @font-face { font-family: "Sans"; src: url("assets/fonts/sans.woff2") format("woff2"); font-weight: 100 1000; }
+    #root { position: absolute; inset: 0; background: #ffffef; overflow: hidden; color: #22251f; font-family: "Sans", sans-serif; }
+    #sc-line { position: absolute; left: 0; right: 0; top: 400px; text-align: center; font-family: "Display", serif; font-size: 150px; line-height: 1.05; letter-spacing: -0.02em; }
+    .sc-w { display: inline-block; opacity: 0; }
+    .sc-accent { color: #5b3cc4; font-style: italic; }
+  </style>
+  <!-- data-composition-id must match the host's in index.html; prefix ids with the scene's initials -->
+  <div id="root" data-composition-id="hook" data-width="1920" data-height="1080">
+    <div id="sc-line"><span class="sc-w">Say</span> <span class="sc-w">one</span> <span class="sc-w sc-accent">thing.</span></div>
+  </div>
+  <script>
+    (function () {
+      const tl = gsap.timeline({ paused: true });
+      // word times come from the voice line's pauses (scripts/pauses.sh), plus its data-start
+      const at = [0.4, 0.7, 1.0];
+      gsap.utils.toArray("#sc-line .sc-w").forEach((w, i) => {
+        tl.fromTo(w, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.35, ease: "power3.out" }, at[i]);
+      });
+      // exit 0.3 s before the scene ends so the next scene's entrance reads as one move
+      tl.to("#sc-line", { y: -60, opacity: 0, duration: 0.3, ease: "power2.in" }, 3.7);
+      window.__timelines["hook"] = tl;
+    })();
+  </script>
+</template>
