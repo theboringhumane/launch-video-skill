@@ -6,10 +6,8 @@ product, add a voiceover, music and sound effects, and render at 60 fps.
 
 ## Install
 
-Copy this folder into your skills directory:
-
 ```bash
-cp -r launch-video ~/.claude/skills/launch-video
+git clone https://github.com/theboringhumane/launch-video-skill ~/.claude/skills/launch-video
 ```
 
 Then ask Claude for something like "make a 30-second launch video for this PR, with a voiceover".
